@@ -12595,11 +12595,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Entwicklung\\Projekte\\TestApi\\TestApi\\TestApi.csproj",
+      "projectUniqueName": "E:\\Entwicklung\\ExampleAsp.NetWebApiWithAngularFrontEnd\\TestApi\\TestApi.csproj",
       "projectName": "TestApi",
-      "projectPath": "E:\\Entwicklung\\Projekte\\TestApi\\TestApi\\TestApi.csproj",
+      "projectPath": "E:\\Entwicklung\\ExampleAsp.NetWebApiWithAngularFrontEnd\\TestApi\\TestApi.csproj",
       "packagesPath": "C:\\Users\\Daniel\\.nuget\\packages\\",
-      "outputPath": "E:\\Entwicklung\\Projekte\\TestApi\\TestApi\\obj\\",
+      "outputPath": "E:\\Entwicklung\\ExampleAsp.NetWebApiWithAngularFrontEnd\\TestApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

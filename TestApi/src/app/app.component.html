@@ -20,8 +20,7 @@
     <tbody>
       <tr>
         <td><label>Enter Search Text</label></td>
-        <td><input type="text" style="width:132px;" #Search /></td>
-        <td><button (click)="search(Search.value)">Search</button></td>
+        <td><input type="text" style="width:132px;" (keyup)="search(Search.value)" #Search /></td>
       </tr>
     </tbody>
   </table>
