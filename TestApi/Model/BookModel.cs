@@ -7,9 +7,9 @@ namespace TestApi.Model
   public class BookModel : IBookModel
     {
 
-      public BookModel(TestDatenbankContext context)
+      public BookModel(IRepository repository)
       {
-          Repository = RepositoryFactory.GetRepository(context);
+          Repository = repository;
       }
 
     public IEnumerable<Book> Books => Repository.GetAll<Book>();
