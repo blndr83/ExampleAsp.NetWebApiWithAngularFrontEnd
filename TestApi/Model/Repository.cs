@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace TestApi.Model
 {
-  public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+  public class Repository : IRepository
     {
         protected readonly DbContext _context;
 
@@ -13,41 +13,41 @@ namespace TestApi.Model
             _context = context;
         }
 
-        public void Add(TEntity entity)
-        {
+        public void Add<TEntity>(TEntity entity) where TEntity : class
+    {
            _context.Set<TEntity>().Add(entity);
            _context.SaveChanges();
         }
 
-        public void AddRange(IEnumerable<TEntity> entities)
+        public void AddRange<TEntity>(IEnumerable<TEntity> entities) where TEntity : class
         {
             _context.Set<TEntity>().AddRange(entities);
             _context.SaveChanges();
         }
 
-        public TEntity GetById(int id)
+        public TEntity GetById<TEntity>(int id) where TEntity : class
         {
             return _context.Set<TEntity>().Find(id);
         }
 
-        public TEntity GetById(string id)
-        {
+        public TEntity GetById<TEntity>(string id) where TEntity : class
+    {
             return _context.Set<TEntity>().Find(id);
         }
 
-        public IEnumerable<TEntity> GetAll()
-        {
+        public IEnumerable<TEntity> GetAll<TEntity>() where TEntity : class
+    {
             return _context.Set<TEntity>().ToList();
         }
 
-        public void Remove(TEntity entity)
-        {
+        public void Remove<TEntity>(TEntity entity) where TEntity : class
+    {
             _context.Set<TEntity>().Remove(entity);
             _context.SaveChanges();
         }
 
-        public void RemoveRange(IEnumerable<TEntity> entities)
-        {
+        public void RemoveRange<TEntity>(IEnumerable<TEntity> entities) where TEntity : class
+    {
             _context.Set<TEntity>().RemoveRange(entities);
             _context.SaveChanges();
         }

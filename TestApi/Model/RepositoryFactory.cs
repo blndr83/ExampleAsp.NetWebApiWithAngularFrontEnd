@@ -7,10 +7,9 @@ namespace TestApi.Model
 {
   public class RepositoryFactory
     {
-        public static T GetRepository<T>(DbContext context)
+        public static IRepository GetRepository(DbContext context)
         {
-            var type = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.GetInterfaces().Contains(typeof(T))).FirstOrDefault();
-            return (T)Activator.CreateInstance(type, context);
+            return new Repository(context);
         }
     }
 }
