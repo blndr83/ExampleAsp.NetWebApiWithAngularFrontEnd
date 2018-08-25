@@ -14,7 +14,7 @@ namespace TestApi.Model
         }
 
         public void Add<TEntity>(TEntity entity) where TEntity : class
-    {
+        {
            _context.Set<TEntity>().Add(entity);
            _context.SaveChanges();
         }
@@ -31,25 +31,31 @@ namespace TestApi.Model
         }
 
         public TEntity GetById<TEntity>(string id) where TEntity : class
-    {
+        {
             return _context.Set<TEntity>().Find(id);
         }
 
         public IEnumerable<TEntity> GetAll<TEntity>() where TEntity : class
-    {
+        {
             return _context.Set<TEntity>().ToList();
         }
 
         public void Remove<TEntity>(TEntity entity) where TEntity : class
-    {
+        {
             _context.Set<TEntity>().Remove(entity);
             _context.SaveChanges();
         }
 
         public void RemoveRange<TEntity>(IEnumerable<TEntity> entities) where TEntity : class
-    {
+        {
             _context.Set<TEntity>().RemoveRange(entities);
             _context.SaveChanges();
         }
-    }
+
+        public void Dispose()
+        {
+          _context.Dispose();
+        }
+
+  }
 }

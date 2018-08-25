@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 
 namespace TestApi.Model
 {
-  public interface IRepository
-    {
+  public interface IRepository : IDisposable
+  {
         TEntity GetById<TEntity>(int id) where TEntity : class;
         TEntity GetById<TEntity>(string id) where TEntity : class;
         IEnumerable<TEntity> GetAll<TEntity>() where TEntity : class;

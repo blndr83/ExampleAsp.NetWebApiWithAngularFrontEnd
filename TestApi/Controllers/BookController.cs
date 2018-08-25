@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 using TestApi.Model;
 using TestApi.ORMapper.Models;
 

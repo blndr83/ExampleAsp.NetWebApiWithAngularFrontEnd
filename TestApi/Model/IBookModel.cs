@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
 using TestApi.ORMapper.Models;
 
 namespace TestApi.Model
 {
-  public interface IBookModel : IDisposable
+  public interface IBookModel
     {
       IEnumerable<Book> Books { get; }
       IEnumerable<Book> GetBooksThatMatchesSearchText(string searchText);
