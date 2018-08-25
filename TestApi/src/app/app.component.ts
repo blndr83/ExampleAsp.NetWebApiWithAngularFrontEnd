@@ -41,8 +41,9 @@ export class AppComponent implements OnInit {
 
     add(name: string, articleNumber: string)
     {
-        if (!name || !articleNumber) return;
-        let newBook = <Book>{ ArticleNumber: articleNumber, Name: name };
+      if (!name || !articleNumber) return;
+      if (name.trim() == '' || articleNumber.trim() == '') return;
+      let newBook = <Book>{ ArticleNumber: articleNumber.trim(), Name: name.trim() };
         let header = new Headers();
         header.append('Content-Type', 'application/json')
         this._httpService.post('api/book', newBook, header).subscribe(books => {
