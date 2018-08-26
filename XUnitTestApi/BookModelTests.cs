@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using TestApi.Model;
 using TestApi.ORMapper.Models;
@@ -97,6 +98,39 @@ namespace XUnitTestApi
             _model.Add(newBook);
             books = _model.Books;
             Assert.True(books.Count() == 1);
+        }
+
+        [Theory]
+        [InlineData("A", 2)]
+        [InlineData("oo", 2)]
+        [InlineData("l", 2)]
+        [InlineData(" ", 3)]
+        [InlineData("D", 3)]
+        [InlineData("m", 1)]
+        [InlineData("die", 1)]
+        [InlineData("23", 1)]
+        public void TestGetBooksThatMatchesSearchText(string searchText, int amountOfExpectedItems)
+        {
+            AddBooksForTestGetBooksThatMatchesSearchText();
+            var books = _model.GetBooksThatMatchesSearchText(searchText);
+            Assert.True(books.Count() == amountOfExpectedItems);
+            Assert.True(books.All(b => b.ArticleNumber.ToLower().Contains(searchText.ToLower())
+            || b.Name.ToLower().Contains(searchText.ToLower())));
+        }
+
+        private void AddBooksForTestGetBooksThatMatchesSearchText()
+        {
+            var books = new List<Book>()
+            {
+                new Book() { ArticleNumber = "A98", Name = "Book One" },
+                new Book() { ArticleNumber = "BC13", Name = "Too Hard" },
+                new Book() { ArticleNumber = "9H5L", Name = "Rincewind" },
+                new Book() { ArticleNumber = "Gkl023", Name = "Los" },
+                new Book() { ArticleNumber = "NBC092", Name = "Der Dieb" },
+                new Book() { ArticleNumber = "521J", Name = "Mehrwert" }
+            };
+
+            books.ForEach(b => _model.Add(b));
         }
     }
 }
