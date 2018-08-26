@@ -1,41 +1,41 @@
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using TestApi.ORMapper.Models;
 
 namespace TestApi.Model
 {
-  public class BookModel : IBookModel
-    {
+  public class BookModel : ModelBase, IBookModel
+  {
 
-      public BookModel(IRepository repository)
+      public BookModel(DbContext context) : base(context)
       {
-          Repository = repository;
+
       }
 
-    public IEnumerable<Book> Books => Repository.GetAll<Book>();
+      public IEnumerable<Book> Books => GetAll<Book>();
 
-    private IRepository Repository { get; }
 
-    public IEnumerable<Book> Add(Book newBook)
-    {
-      var books = Repository.GetAll<Book>();
-      if (!books.Any(b => b.ArticleNumber.ToLower().Equals(newBook.ArticleNumber.ToLower())))
+      public IEnumerable<Book> Add(Book newBook)
       {
-        Repository.Add(newBook);
+        var books = GetAll<Book>();
+        if (!books.Any(b => b.ArticleNumber.ToLower().Equals(newBook.ArticleNumber.ToLower())))
+        {
+          Add<Book>(newBook);
+        }
+        return GetAll<Book>();
       }
-      return Books;
-    }
 
-    public IEnumerable<Book> Delete(string id)
-    {
-      var book = Repository.GetById<Book>(id);
-      Repository.Remove(book);
-      return Books;
-    }
+      public IEnumerable<Book> Delete(string id)
+      {
+        var book = GetById<Book>(id);
+        Remove<Book>(book);
+        return GetAll<Book>(); ;
+      }
 
-    public IEnumerable<Book> GetBooksThatMatchesSearchText(string searchText)
-    {
-      return Repository.GetAll<Book>().Where(b => b.ArticleNumber.ToLower().Contains(searchText.ToLower()) || b.Name.ToLower().Contains(searchText.ToLower()));
-    }
+      public IEnumerable<Book> GetBooksThatMatchesSearchText(string searchText)
+      {
+        return GetAll<Book>().Where(b => b.ArticleNumber.ToLower().Contains(searchText.ToLower()) || b.Name.ToLower().Contains(searchText.ToLower()));
+      }
   }
 }

@@ -6,16 +6,16 @@ using TestApi.ORMapper;
 
 namespace TestApi.Model
 {
-  public class Repository : IRepository
-    {
+  public abstract class ModelBase : IDisposable
+  {
         protected readonly DbContext _context;
 
-        public Repository(DbContext context)
+        protected ModelBase(DbContext context)
         {
             _context = context;
         }
 
-        public void Add<TEntity>(TEntity entity) where TEntity : Entity
+        protected void Add<TEntity>(TEntity entity) where TEntity : Entity
         {
             try
             {
@@ -26,7 +26,7 @@ namespace TestApi.Model
 
         }
 
-        public void AddRange<TEntity>(IEnumerable<TEntity> entities) where TEntity : Entity
+        protected void AddRange<TEntity>(IEnumerable<TEntity> entities) where TEntity : Entity
         {
             try
             {
@@ -36,22 +36,22 @@ namespace TestApi.Model
             catch (Exception){ }
         }
 
-        public TEntity GetById<TEntity>(int id) where TEntity : Entity
+        protected TEntity GetById<TEntity>(int id) where TEntity : Entity
         {
             return _context.Set<TEntity>().Find(id);
         }
 
-        public TEntity GetById<TEntity>(string id) where TEntity : Entity
+        protected TEntity GetById<TEntity>(string id) where TEntity : Entity
         {
             return _context.Set<TEntity>().Find(id);
         }
 
-        public IEnumerable<TEntity> GetAll<TEntity>() where TEntity : Entity
+        protected IEnumerable<TEntity> GetAll<TEntity>() where TEntity : Entity
         {
             return _context.Set<TEntity>().ToList();
         }
 
-        public void Remove<TEntity>(TEntity entity) where TEntity : Entity
+        protected void Remove<TEntity>(TEntity entity) where TEntity : Entity
         {
             try
             {
@@ -61,7 +61,7 @@ namespace TestApi.Model
             catch (Exception){ }
         }
 
-        public void RemoveRange<TEntity>(IEnumerable<TEntity> entities) where TEntity : Entity
+        protected void RemoveRange<TEntity>(IEnumerable<TEntity> entities) where TEntity : Entity
         {
             try
             {

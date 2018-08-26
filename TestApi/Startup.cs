@@ -22,8 +22,7 @@ namespace TestApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<TestDatenbankContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddSingleton<IRepository, Repository>();
-            services.AddSingleton<DbContext, TestDatenbankContext>();
+            services.AddScoped<DbContext, TestDatenbankContext>();
             services.AddScoped<IBookModel, BookModel>();
             services.AddMvc();
         }
