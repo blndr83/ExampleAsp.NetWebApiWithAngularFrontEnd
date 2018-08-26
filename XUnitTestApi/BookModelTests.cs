@@ -29,14 +29,16 @@ namespace XUnitTestApi
             _model = new BookModel(context);
         }
 
-        [Fact]
-        public void TestAdd()
+        [Theory]
+        [InlineData("A123", "Test Book")]
+        [InlineData("  A123  ", " Test Book")]
+        public void TestAdd(string articleNumber, string name)
         {
-            var book = new Book() { ArticleNumber = "A123", Name = "Test Book"};
+            var book = new Book() { ArticleNumber = articleNumber, Name = name};
             _model.Add(book);
             var books = _model.Books;
             Assert.True(books.Count() == 1);
-            Assert.Contains(books, b => b.ArticleNumber.Equals(book.ArticleNumber) && b.Name.Equals(book.Name));
+            Assert.Contains(books, b => b.ArticleNumber.Equals(articleNumber.Trim()) && b.Name.Equals(name.Trim()));
         }
 
         [Fact]
@@ -93,6 +95,9 @@ namespace XUnitTestApi
         [InlineData("ABCGHY", "Nice Book")]
         [InlineData("A65", "Test Book 89")]
         [InlineData("ABCGHY", "Test Book 89")]
+        [InlineData(" ABCGHY ", "Nice Book")]
+        [InlineData("A65", "Test Book 89 ")]
+        [InlineData(" ABCGHY", " Test Book 89")]
         public void TestBookWithDuplicatedIdAndNameWillNotBeAdded(string articleNumber, string name)
         {
             var book = new Book() { ArticleNumber = "ABCGHY", Name = "Test Book 89" };
