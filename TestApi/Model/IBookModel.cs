@@ -7,7 +7,7 @@ namespace TestApi.Model
     {
       IEnumerable<Book> Books { get; }
       IEnumerable<Book> GetBooksThatMatchesSearchText(string searchText);
-      IEnumerable<Book> Add(Book newBook);
-      IEnumerable<Book> Delete(string id);
+      void Add(Book newBook);
+      void Delete(string id);
   }
 }

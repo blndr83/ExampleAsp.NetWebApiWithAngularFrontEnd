@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 using TestApi.Model;
@@ -18,7 +19,10 @@ namespace XUnitTestApi
 
         public BookModelTests()
         {
-            var options = new DbContextOptionsBuilder<TestDatenbankContext>().UseInMemoryDatabase().Options;
+            var serviceProvider = new ServiceCollection().AddEntityFrameworkInMemoryDatabase().BuildServiceProvider();
+            var options = new DbContextOptionsBuilder<TestDatenbankContext>().UseInMemoryDatabase()
+                .UseInternalServiceProvider(serviceProvider)
+                .Options;
             var context = new TestDatenbankContext(options);
             _model = new BookModel(context);
         }
@@ -27,7 +31,8 @@ namespace XUnitTestApi
         public void TestAdd()
         {
             var book = new Book() { ArticleNumber = "A123", Name = "Test Book"};
-            var books = _model.Add(book);
+            _model.Add(book);
+            var books = _model.Books;
             Assert.True(books.Count() == 1);
             Assert.Contains(books, b => b.ArticleNumber.Equals(book.ArticleNumber) && b.Name.Equals(book.Name));
         }
@@ -35,10 +40,21 @@ namespace XUnitTestApi
         [Fact]
         public void TestDelete()
         {
-            var book = new Book() { ArticleNumber = "A123", Name = "Test Book" };
-            var books = _model.Add(book);
+            var book = new Book() { ArticleNumber = "A12343", Name = "Test Book 2" };
+            _model.Add(book);
+            var books = _model.Books;
             Assert.True(books.Count() == 1);
-            books = _model.Delete(book.ArticleNumber);
+            _model.Delete(book.ArticleNumber);
+            books = _model.Books;
+            Assert.False(books.Any());
+        }
+
+        [Fact]
+        public void TestInvalidBookWillnotBeAdded()
+        {
+            var book = new Book() { ArticleNumber = "   ", Name = "" };
+            _model.Add(book);
+            var books = _model.Books;
             Assert.False(books.Any());
         }
     }

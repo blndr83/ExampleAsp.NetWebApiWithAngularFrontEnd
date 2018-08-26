@@ -16,21 +16,23 @@ namespace TestApi.Model
       public IEnumerable<Book> Books => GetAll<Book>();
 
 
-      public IEnumerable<Book> Add(Book newBook)
+      public void Add(Book newBook)
       {
-        var books = GetAll<Book>();
-        if (!books.Any(b => b.ArticleNumber.ToLower().Equals(newBook.ArticleNumber.ToLower())))
+        if(!string.IsNullOrWhiteSpace(newBook.ArticleNumber) && !string.IsNullOrWhiteSpace(newBook.Name))
         {
-          Add<Book>(newBook);
+            var books = GetAll<Book>();
+            if (!books.Any(b => b.ArticleNumber.ToLower().Equals(newBook.ArticleNumber.ToLower())))
+            {
+              Add<Book>(newBook);
+            }
         }
-        return GetAll<Book>();
+
       }
 
-      public IEnumerable<Book> Delete(string id)
+      public void Delete(string id)
       {
         var book = GetById<Book>(id);
-        Remove<Book>(book);
-        return GetAll<Book>(); ;
+        Remove(book);
       }
 
       public IEnumerable<Book> GetBooksThatMatchesSearchText(string searchText)

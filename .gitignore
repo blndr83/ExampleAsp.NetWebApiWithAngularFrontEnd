@@ -77,3 +77,9 @@ XUnitTestApi/obj/project.assets.json
 XUnitTestApi/obj/XUnitTestApi.csproj.nuget.cache
 XUnitTestApi/obj/XUnitTestApi.csproj.nuget.g.props
 XUnitTestApi/obj/XUnitTestApi.csproj.nuget.g.targets
+TestApi/obj/Debug/netcoreapp2.0/TestApi.pdb
+TestApi/obj/Debug/netcoreapp2.0/TestApi.dll
+TestApi/bin/Debug/netcoreapp2.0/TestApi.pdb
+TestApi/bin/Debug/netcoreapp2.0/TestApi.dll
+.vs/TestApi/v15/Server/sqlite3/storage.ide-wal
+.vs/TestApi/v15/Server/sqlite3/storage.ide-shm

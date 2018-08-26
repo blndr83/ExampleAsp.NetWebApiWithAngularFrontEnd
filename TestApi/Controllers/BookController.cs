@@ -31,13 +31,15 @@ namespace TestApi.Controllers
         [HttpPost]
         public IEnumerable<Book> Post([FromBody] Book book)
         {
-            return _bookModel.Add(book);
+            _bookModel.Add(book);
+            return _bookModel.Books;
         }
 
         [HttpDelete("{id}")]
         public IEnumerable<Book> Delete(string id)
         {
-            return _bookModel.Delete(id);
+            _bookModel.Delete(id);
+            return _bookModel.Books;
         }
     }
 }
