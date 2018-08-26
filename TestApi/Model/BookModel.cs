@@ -31,8 +31,12 @@ namespace TestApi.Model
 
       public void Delete(string id)
       {
-        var book = GetById<Book>(id);
-        Remove(book);
+        if(!string.IsNullOrWhiteSpace(id))
+        {
+           var book = GetById<Book>(id);
+           if(book != null)  Remove(book);
+        }
+
       }
 
       public IEnumerable<Book> GetBooksThatMatchesSearchText(string searchText)

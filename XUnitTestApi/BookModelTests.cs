@@ -57,5 +57,29 @@ namespace XUnitTestApi
             var books = _model.Books;
             Assert.False(books.Any());
         }
+
+        [Fact]
+        public void TestDeleteWithInvalidId()
+        {
+            var book = new Book() { ArticleNumber = "ABC", Name = "Test Book 3" };
+            _model.Add(book);
+            var books = _model.Books;
+            Assert.True(books.Count() == 1);
+            _model.Delete("     ");
+            books = _model.Books;
+            Assert.True(books.Count() == 1);
+        }
+
+        [Fact]
+        public void TestDeleteWithNotExistingId()
+        {
+            var book = new Book() { ArticleNumber = "ABCY", Name = "Test Book 5" };
+            _model.Add(book);
+            var books = _model.Books;
+            Assert.True(books.Count() == 1);
+            _model.Delete("A6362");
+            books = _model.Books;
+            Assert.True(books.Count() == 1);
+        }
     }
 }
