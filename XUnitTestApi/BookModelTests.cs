@@ -19,6 +19,8 @@ namespace XUnitTestApi
 
         public BookModelTests()
         {
+            // the serviceProvider make it possible that each test has his own Database
+            // for more information watch https://www.youtube.com/watch?v=BL5Mdx1sUpQ
             var serviceProvider = new ServiceCollection().AddEntityFrameworkInMemoryDatabase().BuildServiceProvider();
             var options = new DbContextOptionsBuilder<TestDatenbankContext>().UseInMemoryDatabase()
                 .UseInternalServiceProvider(serviceProvider)
@@ -49,23 +51,28 @@ namespace XUnitTestApi
             Assert.False(books.Any());
         }
 
-        [Fact]
-        public void TestInvalidBookWillnotBeAdded()
+        [Theory]
+        [InlineData("A70", "   ")]
+        [InlineData("", " Rincewind")]
+        [InlineData("  ", "   ")]
+        public void TestInvalidBookWillnotBeAdded(string articleNumber, string name)
         {
-            var book = new Book() { ArticleNumber = "   ", Name = "" };
+            var book = new Book() { ArticleNumber = articleNumber, Name = name };
             _model.Add(book);
             var books = _model.Books;
             Assert.False(books.Any());
         }
 
-        [Fact]
-        public void TestDeleteWithInvalidId()
+        [Theory]
+        [InlineData("     ")]
+        [InlineData(" ABC")]
+        public void TestDeleteWithInvalidId(string id)
         {
             var book = new Book() { ArticleNumber = "ABC", Name = "Test Book 3" };
             _model.Add(book);
             var books = _model.Books;
             Assert.True(books.Count() == 1);
-            _model.Delete("     ");
+            _model.Delete(id);
             books = _model.Books;
             Assert.True(books.Count() == 1);
         }
@@ -78,6 +85,22 @@ namespace XUnitTestApi
             var books = _model.Books;
             Assert.True(books.Count() == 1);
             _model.Delete("A6362");
+            books = _model.Books;
+            Assert.True(books.Count() == 1);
+        }
+
+        [Theory]
+        [InlineData("ABCGHY", "Nice Book")]
+        [InlineData("A65", "Test Book 89")]
+        [InlineData("ABCGHY", "Test Book 89")]
+        public void TestBookWithDuplicatedIdAndNameWillNotBeAdded(string articleNumber, string name)
+        {
+            var book = new Book() { ArticleNumber = "ABCGHY", Name = "Test Book 89" };
+            _model.Add(book);
+            var books = _model.Books;
+            Assert.True(books.Count() == 1);
+            var newBook = new Book() { ArticleNumber = articleNumber, Name = name };
+            _model.Add(newBook);
             books = _model.Books;
             Assert.True(books.Count() == 1);
         }

@@ -21,7 +21,8 @@ namespace TestApi.Model
         if(!string.IsNullOrWhiteSpace(newBook.ArticleNumber) && !string.IsNullOrWhiteSpace(newBook.Name))
         {
             var books = GetAll<Book>();
-            if (!books.Any(b => b.ArticleNumber.ToLower().Equals(newBook.ArticleNumber.ToLower())))
+            if (!books.Any(b => b.ArticleNumber.ToLower().Equals(newBook.ArticleNumber.ToLower())
+              || b.Name.ToLower().Equals(newBook.Name.ToLower())))
             {
               Add<Book>(newBook);
             }
