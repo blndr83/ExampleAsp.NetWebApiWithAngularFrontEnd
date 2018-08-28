@@ -58,6 +58,9 @@ namespace XUnitTestApi
         [InlineData("A70", "   ")]
         [InlineData("", " Rincewind")]
         [InlineData("  ", "   ")]
+        [InlineData("A70", null)]
+        [InlineData(null, " Rincewind")]
+        [InlineData(null, null)]
         public void TestInvalidBookWillnotBeAdded(string articleNumber, string name)
         {
             var book = new Book() { ArticleNumber = articleNumber, Name = name };
@@ -111,14 +114,22 @@ namespace XUnitTestApi
         [InlineData("23", 1)]
         public void TestGetBooksThatMatchesSearchText(string searchText, int amountOfExpectedItems)
         {
-            AddBooksForTestGetBooksThatMatchesSearchText();
+            AddBooks();
             var books = _model.GetBooksThatMatchesSearchText(searchText);
             Assert.True(books.Count() == amountOfExpectedItems);
             Assert.True(books.All(b => b.ArticleNumber.ToLower().Contains(searchText.ToLower())
             || b.Name.ToLower().Contains(searchText.ToLower())));
         }
 
-        private void AddBooksForTestGetBooksThatMatchesSearchText()
+        [Fact]
+        public void TestNoBookMatchesSearchText()
+        {
+            AddBooks();
+            var books = _model.GetBooksThatMatchesSearchText("Hans");
+            Assert.False(books.Any());
+        }
+
+        private void AddBooks()
         {
             var books = new List<Book>()
             {
