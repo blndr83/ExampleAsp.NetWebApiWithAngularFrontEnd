@@ -45,13 +45,15 @@ namespace XUnitTestApi
         [Fact]
         public void TestDelete()
         {
+            AddBooks();
             var book = new Book() { ArticleNumber = "A12343", Name = "Test Book 2" };
             _model.Add(book);
             var books = _model.Books;
-            Assert.True(books.Count() == 1);
+            Assert.True(books.Count() == 7);
             _model.Delete(book.ArticleNumber);
             books = _model.Books;
-            Assert.False(books.Any());
+            Assert.True(books.Count() == 6);
+            Assert.DoesNotContain(books, b => b.ArticleNumber.Equals(book.ArticleNumber) && b.Name.Equals(book.Name));
         }
 
         [Theory]
