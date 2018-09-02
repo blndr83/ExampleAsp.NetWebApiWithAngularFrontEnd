@@ -9,5 +9,6 @@ namespace TestApi.Model
       IEnumerable<Book> GetBooksThatMatchesSearchText(string searchText);
       void Add(Book newBook);
       void Delete(string id);
+      void Update(Book bookToUpdate);
   }
 }

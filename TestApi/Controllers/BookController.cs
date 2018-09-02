@@ -35,6 +35,13 @@ namespace TestApi.Controllers
             return _bookModel.Books;
         }
 
+        [HttpPut]
+        public IEnumerable<Book> Put([FromBody] Book book)
+        {
+            _bookModel.Update(book);
+            return _bookModel.Books;
+        }
+
         [HttpDelete("{id}")]
         public IEnumerable<Book> Delete(string id)
         {

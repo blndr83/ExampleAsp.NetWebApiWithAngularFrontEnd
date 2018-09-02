@@ -18,13 +18,13 @@ namespace TestApi.Model
 
       public void Add(Book newBook)
       {
-        if(!string.IsNullOrWhiteSpace(newBook.ArticleNumber) && !string.IsNullOrWhiteSpace(newBook.Name))
+        if(!string.IsNullOrWhiteSpace(newBook.ArticleNumber) && !string.IsNullOrWhiteSpace(newBook.Title))
         {
             var books = GetAll<Book>();
             newBook.ArticleNumber = newBook.ArticleNumber.Trim();
-            newBook.Name = newBook.Name.Trim();
+            newBook.Title = newBook.Title.Trim();
             if (!books.Any(b => b.ArticleNumber.ToLower().Equals(newBook.ArticleNumber.ToLower())
-              || b.Name.ToLower().Equals(newBook.Name.ToLower())))
+              || b.Title.ToLower().Equals(newBook.Title.ToLower())))
             {
               Add<Book>(newBook);
             }
@@ -44,7 +44,18 @@ namespace TestApi.Model
 
       public IEnumerable<Book> GetBooksThatMatchesSearchText(string searchText)
       {
-        return GetAll<Book>().Where(b => b.ArticleNumber.ToLower().Contains(searchText.ToLower()) || b.Name.ToLower().Contains(searchText.ToLower()));
+        return GetAll<Book>().Where(b => b.ArticleNumber.ToLower().Contains(searchText.ToLower()) || b.Title.ToLower().Contains(searchText.ToLower()));
       }
+
+      public void Update(Book bookToUpdate)
+      {
+        var book = GetById<Book>(bookToUpdate.ArticleNumber);
+        if (book != null)
+        {
+          book.IsLoaned = bookToUpdate.IsLoaned;
+          book.Title = book.Title;
+          Update<Book>(book);
+        }
+    }
   }
 }

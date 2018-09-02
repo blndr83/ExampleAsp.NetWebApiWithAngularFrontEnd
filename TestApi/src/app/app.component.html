@@ -7,12 +7,12 @@
       <td><input type="text" style="width:132px;" #ArticleNumber /></td>
     </tr>
     <tr>
-      <td><label>Name </label></td>
-      <td><input type="text" #Name id="Name" style="width:132px;" /></td>
+      <td><label>Title </label></td>
+      <td><input type="text" #Title id="Title" style="width:132px;" /></td>
     </tr>
     <tr>
       <td></td>
-      <td><button style="width:132px; margin:2px" type="submit" (click)="add(Name.value, ArticleNumber.value)">Add</button></td>
+      <td><button style="width:132px; margin:2px" type="submit" (click)="add(Title.value, ArticleNumber.value)">Add</button></td>
     </tr>
   </tbody>
   </table>
@@ -27,14 +27,16 @@
   <table style="margin:10px">
     <thead>
       <tr>
-        <th>Article Number </th>
-        <th>Name</th>
+        <th>Article Number</th>
+        <th>Title</th>
+        <th>Loaned</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let book of books">
         <td>{{book?.articleNumber}}</td>
-        <td>{{book?.name}}</td>
+        <td>{{book?.title}}</td>
+        <td *ngIf="book"><input type="checkbox" #Loaned id="Loaned" [checked]="book?.isLoaned" (change)="onLoanedChanged(book?.articleNumber, book?.title, Loaned.checked)" /></td>
         <td *ngIf="book"><button (click)="delete(book?.articleNumber)">Delete</button></td>
       </tr>
     </tbody>

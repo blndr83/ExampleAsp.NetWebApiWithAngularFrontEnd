@@ -26,6 +26,11 @@ namespace TestApi.Model
 
         }
 
+        protected void Update<TEntity>(TEntity entity) where TEntity : Entity
+        {
+            _context.Set<TEntity>().Update(entity);
+            _context.SaveChanges();
+        }
         protected void AddRange<TEntity>(IEnumerable<TEntity> entities) where TEntity : Entity
         {
             try

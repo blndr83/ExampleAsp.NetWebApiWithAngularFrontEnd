@@ -25,7 +25,9 @@ namespace TestApi.ORMapper.Models
                     .HasMaxLength(50)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.Name)
+                entity.Property(e => e.IsLoaned).IsRequired();
+
+                entity.Property(e => e.Title)
                     .IsRequired()
                     .HasMaxLength(50);
             });
