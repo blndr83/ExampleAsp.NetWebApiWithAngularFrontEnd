@@ -49,7 +49,7 @@ namespace TestApi.Model
 
       public void Update(Book bookToUpdate)
       {
-        var book = Get(b => b.ArticleNumber.Equals(bookToUpdate.ArticleNumber)).FirstOrDefault();
+        var book = GetById(bookToUpdate.ArticleNumber);
         if (book != null)
         {
           Update(bookToUpdate, book);
