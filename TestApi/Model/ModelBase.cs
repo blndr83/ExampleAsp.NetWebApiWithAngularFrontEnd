@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using TestApi.ORMapper;
 
 namespace TestApi.Model
@@ -26,9 +27,10 @@ namespace TestApi.Model
 
         }
 
-        protected void Update<TEntity>(TEntity entity) where TEntity : Entity
+        protected void Update<TEntity>(TEntity entity, TEntity oldEntity) where TEntity : Entity
         {
-            _context.Set<TEntity>().Update(entity);
+            _context.Entry(oldEntity).State = EntityState.Detached;
+            _context.Entry(entity).State = EntityState.Modified;
             _context.SaveChanges();
         }
         protected void AddRange<TEntity>(IEnumerable<TEntity> entities) where TEntity : Entity
@@ -39,6 +41,11 @@ namespace TestApi.Model
                 _context.SaveChanges();
             }
             catch (Exception){ }
+        }
+
+        protected IEnumerable<TEntity> Get<TEntity>(Expression<Func<TEntity, bool>> filter) where TEntity : Entity
+        {
+            return _context.Set<TEntity>().Where(filter).ToList();
         }
 
         protected TEntity GetById<TEntity>(int id) where TEntity : Entity

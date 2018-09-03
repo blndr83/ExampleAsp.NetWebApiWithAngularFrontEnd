@@ -9,7 +9,6 @@ E:\Entwicklung\Projekte\TestApi\TestApi\bin\Debug\netcoreapp2.0\TestApi.pdb
 E:\Entwicklung\Projekte\TestApi\TestApi\obj\Debug\netcoreapp2.0\TestApi.dll
 E:\Entwicklung\Projekte\TestApi\TestApi\obj\Debug\netcoreapp2.0\TestApi.pdb
 E:\Entwicklung\Projekte\TestApi\TestApi\obj\Debug\netcoreapp2.0\TestApi.csprojAssemblyReference.cache
-E:\Entwicklung\ExampleAsp.NetWebApiWithAngularFrontEnd\TestApi\obj\Debug\netcoreapp2.0\TestApi.csprojAssemblyReference.cache
 E:\Entwicklung\ExampleAsp.NetWebApiWithAngularFrontEnd\TestApi\obj\Debug\netcoreapp2.0\TestApi.dll
 E:\Entwicklung\ExampleAsp.NetWebApiWithAngularFrontEnd\TestApi\obj\Debug\netcoreapp2.0\TestApi.pdb
 E:\Entwicklung\ExampleAsp.NetWebApiWithAngularFrontEnd\TestApi\bin\Debug\netcoreapp2.0\TestApi.deps.json

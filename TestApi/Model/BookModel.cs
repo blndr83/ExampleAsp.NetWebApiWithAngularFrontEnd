@@ -44,17 +44,15 @@ namespace TestApi.Model
 
       public IEnumerable<Book> GetBooksThatMatchesSearchText(string searchText)
       {
-        return GetAll<Book>().Where(b => b.ArticleNumber.ToLower().Contains(searchText.ToLower()) || b.Title.ToLower().Contains(searchText.ToLower()));
+        return Get<Book>(b => b.ArticleNumber.ToLower().Contains(searchText.ToLower()) || b.Title.ToLower().Contains(searchText.ToLower()));
       }
 
       public void Update(Book bookToUpdate)
       {
-        var book = GetById<Book>(bookToUpdate.ArticleNumber);
+        var book = Get<Book>(b => b.ArticleNumber.Equals(bookToUpdate.ArticleNumber)).FirstOrDefault();
         if (book != null)
         {
-          book.IsLoaned = bookToUpdate.IsLoaned;
-          book.Title = book.Title;
-          Update<Book>(book);
+          Update(bookToUpdate, book);
         }
     }
   }
