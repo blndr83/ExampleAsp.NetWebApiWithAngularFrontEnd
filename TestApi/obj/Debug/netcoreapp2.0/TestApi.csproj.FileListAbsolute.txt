@@ -19,3 +19,4 @@ E:\Entwicklung\ExampleAsp.NetWebApiWithAngularFrontEnd\TestApi\bin\Debug\netcore
 E:\Entwicklung\ExampleAsp.NetWebApiWithAngularFrontEnd\TestApi\obj\Debug\netcoreapp2.0\TestApi.csproj.CoreCompileInputs.cache
 E:\Entwicklung\ExampleAsp.NetWebApiWithAngularFrontEnd\TestApi\obj\Debug\netcoreapp2.0\TestApi.AssemblyInfoInputs.cache
 E:\Entwicklung\ExampleAsp.NetWebApiWithAngularFrontEnd\TestApi\obj\Debug\netcoreapp2.0\TestApi.AssemblyInfo.cs
+E:\Entwicklung\ExampleAsp.NetWebApiWithAngularFrontEnd\TestApi\obj\Debug\netcoreapp2.0\TestApi.csprojAssemblyReference.cache

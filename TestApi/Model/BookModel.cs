@@ -5,7 +5,7 @@ using TestApi.ORMapper.Models;
 
 namespace TestApi.Model
 {
-  public class BookModel : ModelBase, IBookModel
+  public class BookModel : ModelBase<Book>, IBookModel
   {
 
       public BookModel(DbContext context) : base(context)
@@ -13,20 +13,20 @@ namespace TestApi.Model
 
       }
 
-      public IEnumerable<Book> Books => GetAll<Book>();
+      public IEnumerable<Book> Books => GetAll();
 
 
       public void Add(Book newBook)
       {
         if(!string.IsNullOrWhiteSpace(newBook.ArticleNumber) && !string.IsNullOrWhiteSpace(newBook.Title))
         {
-            var books = GetAll<Book>();
+            var books = GetAll();
             newBook.ArticleNumber = newBook.ArticleNumber.Trim();
             newBook.Title = newBook.Title.Trim();
             if (!books.Any(b => b.ArticleNumber.ToLower().Equals(newBook.ArticleNumber.ToLower())
               || b.Title.ToLower().Equals(newBook.Title.ToLower())))
             {
-              Add<Book>(newBook);
+              Insert(newBook);
             }
         }
 
@@ -36,7 +36,7 @@ namespace TestApi.Model
       {
         if(!string.IsNullOrWhiteSpace(id))
         {
-           var book = GetById<Book>(id);
+           var book = GetById(id);
            if(book != null)  Remove(book);
         }
 
@@ -44,12 +44,12 @@ namespace TestApi.Model
 
       public IEnumerable<Book> GetBooksThatMatchesSearchText(string searchText)
       {
-        return Get<Book>(b => b.ArticleNumber.ToLower().Contains(searchText.ToLower()) || b.Title.ToLower().Contains(searchText.ToLower()));
+        return Get(b => b.ArticleNumber.ToLower().Contains(searchText.ToLower()) || b.Title.ToLower().Contains(searchText.ToLower()));
       }
 
       public void Update(Book bookToUpdate)
       {
-        var book = Get<Book>(b => b.ArticleNumber.Equals(bookToUpdate.ArticleNumber)).FirstOrDefault();
+        var book = Get(b => b.ArticleNumber.Equals(bookToUpdate.ArticleNumber)).FirstOrDefault();
         if (book != null)
         {
           Update(bookToUpdate, book);

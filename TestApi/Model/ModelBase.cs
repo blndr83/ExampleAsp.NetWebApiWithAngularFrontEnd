@@ -7,77 +7,80 @@ using TestApi.ORMapper;
 
 namespace TestApi.Model
 {
-  public abstract class ModelBase : IDisposable
+  public abstract class ModelBase<TEntity> : IDisposable where TEntity : Entity  
   {
         protected readonly DbContext _context;
+        protected readonly DbSet<TEntity> _dbSet;
 
         protected ModelBase(DbContext context)
         {
             _context = context;
+            _dbSet = context.Set<TEntity>();
         }
 
-        protected void Add<TEntity>(TEntity entity) where TEntity : Entity
+        protected void Insert(TEntity entity)
         {
             try
             {
-              _context.Set<TEntity>().Add(entity);
+              _dbSet.Add(entity);
               _context.SaveChanges();
             }
             catch (Exception) { }
 
         }
 
-        protected void Update<TEntity>(TEntity entity, TEntity oldEntity) where TEntity : Entity
+        protected void Update(TEntity entity, TEntity oldEntity)
         {
             _context.Entry(oldEntity).State = EntityState.Detached;
             _context.Entry(entity).State = EntityState.Modified;
             _context.SaveChanges();
         }
-        protected void AddRange<TEntity>(IEnumerable<TEntity> entities) where TEntity : Entity
+
+        protected void AddRange(IEnumerable<TEntity> entities)
         {
             try
             {
-                _context.Set<TEntity>().AddRange(entities);
+                _dbSet.AddRange(entities);
                 _context.SaveChanges();
             }
             catch (Exception){ }
         }
 
-        protected IEnumerable<TEntity> Get<TEntity>(Expression<Func<TEntity, bool>> filter) where TEntity : Entity
+        protected IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> filter)
         {
-            return _context.Set<TEntity>().Where(filter).ToList();
+            return _dbSet.Where(filter).ToList();
         }
 
-        protected TEntity GetById<TEntity>(int id) where TEntity : Entity
+        protected TEntity GetById(int id)
         {
-            return _context.Set<TEntity>().Find(id);
+            return _dbSet.Find(id);
         }
 
-        protected TEntity GetById<TEntity>(string id) where TEntity : Entity
+        protected TEntity GetById(string id)
         {
-            return _context.Set<TEntity>().Find(id);
+            return _dbSet.Find(id);
         }
 
-        protected IEnumerable<TEntity> GetAll<TEntity>() where TEntity : Entity
+        protected IEnumerable<TEntity> GetAll()
         {
-            return _context.Set<TEntity>().ToList();
+            return _dbSet.ToList();
         }
 
-        protected void Remove<TEntity>(TEntity entity) where TEntity : Entity
+        protected void Remove(TEntity entity)
         {
             try
             {
-                _context.Set<TEntity>().Remove(entity);
+                _dbSet.Remove(entity);
                 _context.SaveChanges();
             }
             catch (Exception){ }
         }
 
-        protected void RemoveRange<TEntity>(IEnumerable<TEntity> entities) where TEntity : Entity
+        protected void RemoveRange(IEnumerable<TEntity> entities)
         {
             try
             {
-                _context.Set<TEntity>().RemoveRange(entities);
+                _dbSet.RemoveRange(entities);
                 _context.SaveChanges();
             }
             catch (Exception) {}
