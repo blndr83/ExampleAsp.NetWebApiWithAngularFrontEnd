@@ -153,3 +153,7 @@ TestApi/bin/Debug/netcoreapp2.0/TestApi.dll
 TestApi/bin/Debug/netcoreapp2.0/TestApi.pdb
 TestApi/obj/Debug/netcoreapp2.0/TestApi.pdb
 TestApi/obj/Debug/netcoreapp2.0/TestApi.dll
+.vs/TestApi/DesignTimeBuild/.dtbcache
+.vs/TestApi/DesignTimeBuild/.dtbcache
+.vs/TestApi/v15/.suo
+.vs/TestApi/v15/Server/sqlite3/storage.ide-shm

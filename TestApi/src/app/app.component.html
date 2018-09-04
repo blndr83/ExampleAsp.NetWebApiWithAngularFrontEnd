@@ -36,7 +36,7 @@
       <tr *ngFor="let book of books">
         <td>{{book?.articleNumber}}</td>
         <td>{{book?.title}}</td>
-        <td *ngIf="book"><input type="checkbox" #Loaned id="Loaned" [checked]="book?.isLoaned" (change)="onLoanedChanged(book?.articleNumber, book?.title, Loaned.checked)" /></td>
+        <td *ngIf="book"><input type="checkbox" #Loaned id="Loaned" [checked]="book?.isLoaned" (change)="onLoanedChanged(book?.articleNumber, Loaned.checked)" /></td>
         <td *ngIf="book"><button (click)="delete(book?.articleNumber)">Delete</button></td>
       </tr>
     </tbody>

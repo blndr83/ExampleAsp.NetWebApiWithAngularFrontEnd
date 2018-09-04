@@ -5,9 +5,9 @@ import 'rxjs/add/operator/map'
 import { HttpClient } from '@angular/common/http'
 
   export interface Book {
-    Title: string;
-    ArticleNumber: string;
-    IsLoaned: boolean;
+    title: string;
+    articleNumber: string;
+    isLoaned: boolean;
   }
 
 
@@ -77,9 +77,11 @@ export class AppComponent implements OnInit {
       });  
     }
 
-    onLoanedChanged(articleNumber: string, title: string, isLoaned: boolean)
+    onLoanedChanged(articleNumber: string, isLoaned: boolean)
     {
-      let bookToUpdate = <Book>{ ArticleNumber: articleNumber.trim(), Title: title, IsLoaned: isLoaned };
+      let bookToUpdate = this.books.find(b => b.articleNumber === articleNumber);
+      console.log(bookToUpdate);
+      bookToUpdate.isLoaned = isLoaned;
       this._bookService.update(bookToUpdate).subscribe(books => {
         this.books = books;
         console.log(books);
@@ -90,7 +92,7 @@ export class AppComponent implements OnInit {
     {
       if (!title || !articleNumber) return;
       if (title.trim() == '' || articleNumber.trim() == '') return;
-      let newBook = <Book>{ ArticleNumber: articleNumber.trim(), Title: title.trim(), IsLoaned: false };
+      let newBook = <Book>{ articleNumber: articleNumber.trim(), title: title.trim(), isLoaned: false };
       this._bookService.add(newBook).subscribe(books => {
         this.books = books;
         console.log(books);
