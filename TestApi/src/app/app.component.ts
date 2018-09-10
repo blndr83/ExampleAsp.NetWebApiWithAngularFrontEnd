@@ -49,6 +49,7 @@ import { HttpClient } from '@angular/common/http'
 
 export class AppComponent implements OnInit {
     title: string;
+    editRowId: string = '';
     books: Book[] = [];
 
   constructor(private _bookService: BookService) { }
@@ -59,10 +60,15 @@ export class AppComponent implements OnInit {
     }
 
     getAll() {
+      this.editRowId = '';
       this._bookService.getAll().subscribe(books => {
         this.books = books;
         console.log(books);
       });
+    }
+
+    edit(id: string) {
+      this.editRowId = id;
     }
 
     search(searchText: string)
@@ -77,11 +83,10 @@ export class AppComponent implements OnInit {
       });  
     }
 
-    onLoanedChanged(articleNumber: string, isLoaned: boolean)
+    update(bookToUpdate: Book )
     {
-      let bookToUpdate = this.books.find(b => b.articleNumber === articleNumber);
+      this.editRowId = '';
       console.log(bookToUpdate);
-      bookToUpdate.isLoaned = isLoaned;
       this._bookService.update(bookToUpdate).subscribe(books => {
         this.books = books;
         console.log(books);
