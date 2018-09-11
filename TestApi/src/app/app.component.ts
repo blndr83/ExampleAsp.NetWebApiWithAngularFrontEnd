@@ -50,6 +50,8 @@ export class AppComponent implements OnInit {
     displayedBooks: Book[] = [];
     searchText: string = '';
     showOnlyLoanedBooks: boolean = false;
+    bookTitle: string = '';
+    bookArticleNumber: string = '';
 
     constructor(private _bookService: BookService) { }
     
@@ -112,11 +114,18 @@ export class AppComponent implements OnInit {
       });
     }
 
-    add(title: string, articleNumber: string)
+    add()
     {
-      if (!title || !articleNumber) return;
-      if (title.trim() == '' || articleNumber.trim() == '') return;
-      let newBook = <Book>{ articleNumber: articleNumber.trim(), title: title.trim(), isLoaned: false };
+      if (!this.bookTitle || !this.bookArticleNumber) return;
+      this.bookArticleNumber = this.bookArticleNumber.trim();
+      this.bookTitle = this.bookTitle.trim();
+      if (!this.bookTitle || !this.bookArticleNumber) return;
+      let newBook = <Book>{
+        articleNumber: this.bookArticleNumber.trim(), title: this.bookTitle.trim(),
+        isLoaned: false
+      };
+      this.bookArticleNumber = '';
+      this.bookTitle = '';
       this._bookService.add(newBook).subscribe(books => {
         this.books = books;
         console.log(books);

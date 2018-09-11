@@ -4,15 +4,15 @@
   <tbody>
     <tr>
       <td><label>Article number</label></td>
-      <td><input type="text" style="width:132px;" #ArticleNumber /></td>
+      <td><input type="text" style="width:132px;" [(ngModel)]="bookArticleNumber" /></td>
     </tr>
     <tr>
       <td><label>Title </label></td>
-      <td><input type="text" #Title id="Title" style="width:132px;" /></td>
+      <td><input type="text" [(ngModel)]="bookTitle" style="width:132px;" /></td>
     </tr>
     <tr>
       <td></td>
-      <td><button style="width:132px; margin:2px" type="submit" (click)="add(Title.value, ArticleNumber.value)">Add</button></td>
+      <td><button style="width:132px; margin:2px" type="submit" (click)="add()">Add</button></td>
     </tr>
   </tbody>
   </table>
