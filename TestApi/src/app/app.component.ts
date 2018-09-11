@@ -49,13 +49,14 @@ export class AppComponent implements OnInit {
     books: Book[] = [];
     displayedBooks: Book[] = [];
     searchText: string = '';
+    showOnlyLoanedBooks: boolean = false;
 
-  constructor(private _bookService: BookService) { }
+    constructor(private _bookService: BookService) { }
     
-    ngOnInit() {
-      this.title = 'Books';
-      this.getAll();
-    }
+      ngOnInit() {
+        this.title = 'Books';
+        this.getAll();
+      }
 
     getAll() {
       this.editRowId = '';
@@ -71,12 +72,27 @@ export class AppComponent implements OnInit {
     }
 
     updateDisplayedBooks() {
-      if (!this.searchText) {
-        this.displayedBooks = this.books;
+      console.log(this.searchText);
+      console.log(this.showOnlyLoanedBooks);
+      if (!this.searchText && this.showOnlyLoanedBooks === false) {
+          this.displayedBooks = this.books;
+          return;
+      }
+      if (!this.searchText && this.showOnlyLoanedBooks === true) {
+        this.displayedBooks = this.books.filter(b => b.isLoaned === true);
         return;
       }
-      this.displayedBooks = this.books.filter(b => b.articleNumber.toLowerCase().includes(this.searchText.toLowerCase())
+
+      let tempBooks = this.books.filter(b => b.articleNumber.toLowerCase().includes(this.searchText.toLowerCase())
         || b.title.toLowerCase().includes(this.searchText.toLowerCase()));
+
+      if (this.showOnlyLoanedBooks === false) {
+        this.displayedBooks = tempBooks;
+      }
+      else {
+        this.displayedBooks = tempBooks.filter(b => b.isLoaned === true);
+      }
+
     }
 
     search(searchText: string)

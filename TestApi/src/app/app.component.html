@@ -3,7 +3,7 @@
   <table style="margin:10px">
   <tbody>
     <tr>
-      <td><label>Article Number</label></td>
+      <td><label>Article number</label></td>
       <td><input type="text" style="width:132px;" #ArticleNumber /></td>
     </tr>
     <tr>
@@ -19,15 +19,19 @@
   <table style="margin:10px">
     <tbody>
       <tr>
-        <td><label>Enter Search Text</label></td>
+        <td><label>Enter search text</label></td>
         <td><input type="text" style="width:132px;" (keyup)="search(Search.value)" #Search /></td>
+      </tr>
+      <tr>
+        <td>Show only loaned books</td>
+        <td><input type="checkbox" [(ngModel)]="showOnlyLoanedBooks" (change)="updateDisplayedBooks()"/></td>
       </tr>
     </tbody>
   </table>
   <table style="margin:10px">
     <thead>
       <tr>
-        <th>Article Number</th>
+        <th>Article number</th>
         <th>Title</th>
         <th>Loaned</th>
       </tr>
@@ -40,7 +44,7 @@
           <button (click)="update(book)">Ok</button>
         </td>
         <td *ngIf="book.articleNumber !==editRowId" (click)="edit(book?.articleNumber)">{{book?.title}}</td>
-        <td *ngIf="book"><input type="checkbox" #Loaned id="Loaned" [(ngModel)]="book.isLoaned" (change)="update(book)" /></td>
+        <td *ngIf="book"><input type="checkbox" [(ngModel)]="book.isLoaned" (change)="update(book)" /></td>
         <td *ngIf="book"><button (click)="delete(book?.articleNumber)">Delete</button></td>
       </tr>
     </tbody>
