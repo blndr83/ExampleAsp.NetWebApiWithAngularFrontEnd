@@ -42,11 +42,6 @@ namespace TestApi.Model
 
       }
 
-      public IEnumerable<Book> GetBooksThatMatchesSearchText(string searchText)
-      {
-        return Get(b => b.ArticleNumber.ToLower().Contains(searchText.ToLower()) || b.Title.ToLower().Contains(searchText.ToLower()));
-      }
-
       public void Update(Book bookToUpdate)
       {
         var book = GetById(bookToUpdate.ArticleNumber);

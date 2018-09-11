@@ -28,10 +28,6 @@ import { HttpClient } from '@angular/common/http'
       return this._httpService.delete<Book[]>('api/book/' + articleNumber)
     }
 
-    find(searchText: string): Observable<Book[]> {
-      return this._httpService.get<Book[]> ('api/book/' + searchText)
-    }
-
     update(book: Book): Observable<Book[]> {
       return this._httpService.put<Book[]>('api/book', book)
     }
@@ -51,6 +47,8 @@ export class AppComponent implements OnInit {
     title: string;
     editRowId: string = '';
     books: Book[] = [];
+    displayedBooks: Book[] = [];
+    searchText: string = '';
 
   constructor(private _bookService: BookService) { }
     
@@ -64,6 +62,7 @@ export class AppComponent implements OnInit {
       this._bookService.getAll().subscribe(books => {
         this.books = books;
         console.log(books);
+        this.updateDisplayedBooks();
       });
     }
 
@@ -71,16 +70,19 @@ export class AppComponent implements OnInit {
       this.editRowId = id;
     }
 
+    updateDisplayedBooks() {
+      if (!this.searchText) {
+        this.displayedBooks = this.books;
+        return;
+      }
+      this.displayedBooks = this.books.filter(b => b.articleNumber.toLowerCase().includes(this.searchText.toLowerCase())
+        || b.title.toLowerCase().includes(this.searchText.toLowerCase()));
+    }
+
     search(searchText: string)
     {
-      if (!searchText) {
-            this.getAll();
-            return;
-      }
-      this._bookService.find(searchText).subscribe(books => {
-        this.books = books;
-        console.log(books);
-      });  
+      this.searchText = searchText;
+      this.updateDisplayedBooks();
     }
 
     update(bookToUpdate: Book )
@@ -90,6 +92,7 @@ export class AppComponent implements OnInit {
       this._bookService.update(bookToUpdate).subscribe(books => {
         this.books = books;
         console.log(books);
+        this.updateDisplayedBooks();
       });
     }
 
@@ -101,6 +104,7 @@ export class AppComponent implements OnInit {
       this._bookService.add(newBook).subscribe(books => {
         this.books = books;
         console.log(books);
+        this.updateDisplayedBooks();
       });
         
     }
@@ -111,6 +115,7 @@ export class AppComponent implements OnInit {
       this._bookService.delete(articleNumber).subscribe(books => {
         this.books = books;
         console.log(books);
+        this.updateDisplayedBooks();
       });
     }
 }

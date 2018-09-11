@@ -22,12 +22,6 @@ namespace TestApi.Controllers
             return  _bookModel.Books;
         }
 
-        [HttpGet("{id}")]
-        public IEnumerable<Book> Get(string id)
-        {
-            return _bookModel.GetBooksThatMatchesSearchText(id);
-        }
-
         [HttpPost]
         public IEnumerable<Book> Post([FromBody] Book book)
         {

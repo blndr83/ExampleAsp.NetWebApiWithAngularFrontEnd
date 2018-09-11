@@ -46,11 +46,6 @@ namespace TestApi.Model
             catch (Exception){ }
         }
 
-        protected IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> filter)
-        {
-            return _dbSet.Where(filter).ToList();
-        }
-
         protected TEntity GetById(int id)
         {
             return _dbSet.Find(id);

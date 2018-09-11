@@ -105,31 +105,7 @@ namespace XUnitTestApi
             Assert.True(books.Count() == 1);
         }
 
-        [Theory]
-        [InlineData("A", 2)]
-        [InlineData("oo", 2)]
-        [InlineData("l", 2)]
-        [InlineData(" ", 3)]
-        [InlineData("D", 3)]
-        [InlineData("m", 1)]
-        [InlineData("die", 1)]
-        [InlineData("23", 1)]
-        public void TestGetBooksThatMatchesSearchText(string searchText, int amountOfExpectedItems)
-        {
-            AddBooks();
-            var books = _model.GetBooksThatMatchesSearchText(searchText);
-            Assert.True(books.Count() == amountOfExpectedItems);
-            Assert.True(books.All(b => b.ArticleNumber.ToLower().Contains(searchText.ToLower())
-            || b.Title.ToLower().Contains(searchText.ToLower())));
-        }
 
-        [Fact]
-        public void TestNoBookMatchesSearchText()
-        {
-            AddBooks();
-            var books = _model.GetBooksThatMatchesSearchText("Hans");
-            Assert.False(books.Any());
-        }
 
         [Fact]
         public void TestUpdate()

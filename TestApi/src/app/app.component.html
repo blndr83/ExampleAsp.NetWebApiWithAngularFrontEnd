@@ -33,7 +33,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let book of books">
+      <tr *ngFor="let book of displayedBooks">
         <td>{{book?.articleNumber}}</td>
         <td *ngIf="book.articleNumber === editRowId"><input type="text" [(ngModel)]="book.title"/>
           <button (click)="getAll()">Cancel</button>
